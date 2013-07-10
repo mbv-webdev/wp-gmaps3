@@ -33,7 +33,6 @@
 
 					addressElement = $(\'#start-address\');
 
-					console.info(addressElement.val());
 					if (addressElement.length > 0 && addressElement.val() !== \'\') {
 						displayRoute(route_address, addressElement.val(), true);
 					}

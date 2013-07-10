@@ -55,7 +55,6 @@
 			}
 
 			$destination_address = '';
-			var_dump($args);
 			if (!empty($args['destination'])) {
 				$destination_address = do_shortcode($args['destination']);
 			}
