@@ -15,7 +15,7 @@ This Plugin uses [GMAP3 Plugin for jQuery](http://gmap3.net)
 
 It's generating HTML/Javascript/jQuery to load a small Google Maps container. 
 
-Usage Example: [gmaps center="<latitude>,<longitude>" zoom=<zoom> marker="<lat>,<long>"]
+Usage Example: [gmaps center="{latitude},{longitude}" zoom={zoom} marker="{lat},{long}"]
 	
 You can split up the route form from your google maps with [groute]
 
