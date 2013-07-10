@@ -60,7 +60,7 @@
 			}
 
 			// defaults for route
-			if (isset($args['with-route'])) {
+			if (in_array('with-route', $args) || isset($args['with-route'])) {
 				$show_route = true;
 			} else {
 				$show_route = false;
