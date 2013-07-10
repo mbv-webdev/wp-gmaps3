@@ -3,7 +3,7 @@ Contributors: mbvwebdev
 Tags: shortcode, google maps
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,9 @@ for more details about the arguments, see the [documentation of jQuery gmap3](ht
 just upload and activate the plugin
 
 == Changelog ==
+
+= 0.3 =
+* Added missing function and event binding
 
 = 0.2 =
 * Route Form added
