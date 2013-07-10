@@ -25,6 +25,20 @@
 		
 		private function getJS() {
 			return '
+				function calculateRoute(formEvent) {
+					var addressElement = null;
+
+					formEvent.stopPropagation();
+					formEvent.preventDefault();
+
+					addressElement = $(\'#start-address\');
+
+					console.info(addressElement.val());
+					if (addressElement.length > 0 && addressElement.val() !== \'\') {
+						displayRoute(route_address, addressElement.val(), true);
+					}
+				};
+
 				function displayRoute(destination, origin, showInstructions) {
 					'.$this->gmapObject.'.gmap3({
 						getroute: {
