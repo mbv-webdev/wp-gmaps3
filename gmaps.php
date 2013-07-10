@@ -54,13 +54,19 @@
 				$args['height'] = '300px';
 			}
 
-			// defaults for route
-			if (empty($args['with-route'])) {
-				$show_route = false;
-			} else {
-				$show_route = true;
+			$destination_address = '';
+			var_dump($args);
+			if (!empty($args['destination'])) {
+				$destination_address = do_shortcode($args['destination']);
 			}
-			
+
+			// defaults for route
+			if (isset($args['with-route'])) {
+				$show_route = true;
+			} else {
+				$show_route = false;
+			}
+
 			// put string into array for json
 			$args['center'] = explode(',', $args['center']);
 			$args['marker'] = explode(',', $args['marker']);
@@ -80,10 +86,14 @@
 			
 			// javascript function with parameters
 			$gmapsFn = "
-				var gmap".($this->gmapsElement)." = null;
+				var gmap".($this->gmapsElement)." = null,
+					route_address = '".$destination_address."';
+
 				jQuery(function($) {
 					gmap".($this->gmapsElement)." = $('#".$this->gmapsjQueryString."').gmap3(".json_encode($gmapsJSON).");
-				})";
+				})
+
+				jQuery(document).on('submit', '#".$this->gmapsjQueryString."-form', calculateRoute);";
 
 			$gmapsHTML  = '<div id="'.($this->gmapsjQueryString).'" style="height:'.$args['height'].'; width: '.$args['width'].';"></div>';
 			$gmapsHTML .= '<script type="text/javascript">'.$gmapsFn.'</script>';
