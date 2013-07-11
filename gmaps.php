@@ -2,7 +2,7 @@
 /*
 	Plugin Name: gmaps3 Shortcode
 	Description: Shortcode integration for Google Maps API v3
-	Version: 0.2
+	Version: 0.3.8
 	Author: MBV Media
 	Author URI: http://mbv-media.com
 	License: GPLv3
@@ -16,7 +16,7 @@
 	Class GMap3 {
 		private $gmapsjQueryString = 'map-canvas';
 		private $gmapsElement = '';
-		
+
 		public function __construct() {
 			$this->gmapsElement = str_replace(' ', '', ucwords(str_replace(array('_', '-', '#'), ' ', $this->gmapsjQueryString)));
 
@@ -28,9 +28,9 @@
 		public function addJS() {
 			wp_enqueue_script('googleMaps', 'http://maps.google.com/maps/api/js?sensor=false');
 			wp_enqueue_script('gmap3', plugins_url('gmap3.min.js', __FILE__), array('jquery', 'googleMaps'));
-			wp_enqueue_script('gmap3route', plugins_url('route.js.php?gmap=gmap'.$this->gmapsElement.'&amp;route='.($this->gmapsjQueryString).'-route', __FILE__), array('gmap3'));
+			wp_enqueue_script('gmap3route', plugins_url('route.js.php?gmap=gmap'.$this->gmapsElement.'&amp;gmapid='.($this->gmapsjQueryString), __FILE__), array('gmap3'));
 		}
-		
+
 		/**
 		 * Generate Shortcode into HTML/Javascript and call gmap3
 		 * @param array $args
@@ -56,11 +56,15 @@
 
 			$destination_address = '';
 			if (!empty($args['destination'])) {
-				$destination_address = do_shortcode($args['destination']);
+				$destination_address = $args['destination'];
 			}
 
 			// defaults for route
-			if (in_array('with-route', $args) || isset($args['with-route'])) {
+			if (   !empty($destination_address)
+				&& (in_array('with-route', $args)
+				||  in_array('withroute', $args)
+				|| !empty($args['withroute']))
+			) {
 				$show_route = true;
 			} else {
 				$show_route = false;
@@ -69,13 +73,13 @@
 			// put string into array for json
 			$args['center'] = explode(',', $args['center']);
 			$args['marker'] = explode(',', $args['marker']);
-			$args['zoom'] = intval($args['zoom']);
+			$args['zoom']   = intval($args['zoom']);
 			
 			$gmapsJSON = array(
 				'map' => array(
 					'options' => array(
 						'center' => $args['center'],
-						'zoom' => $args['zoom'],
+						'zoom'   => $args['zoom'],
 					)
 				),
 				'marker' => array(

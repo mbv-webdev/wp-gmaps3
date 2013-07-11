@@ -2,6 +2,7 @@
 	Class GMap3Route {
 		private $gmapObject = null;
 		private $routeElement = null;
+		private $gmapId = '';
 		
 		/**
 		 * accept GET Params to generate a Javascript File
@@ -10,8 +11,9 @@
 			if (!empty($_GET['gmap'])) {
 				$this->gmapObject = $_GET['gmap'];
 
-				if (!empty($_GET['route'])) {
-					$this->routeElement = $_GET['route'];
+				if (!empty($_GET['gmapid'])) {
+					$this->gmapId = $_GET['gmapid'];
+					$this->routeElement = $this->gmapId.'-route';
 				}
 				
 				$this->setHeaders();
@@ -31,7 +33,7 @@
 					formEvent.stopPropagation();
 					formEvent.preventDefault();
 
-					addressElement = $(\'#start-address\');
+					addressElement = jQuery(\'#'.$this->gmapId.'-address\');
 
 					if (addressElement.length > 0 && addressElement.val() !== \'\') {
 						displayRoute(route_address, addressElement.val(), true);
@@ -54,7 +56,7 @@
 
 								'.$this->gmapObject.'.gmap3({
 									directionsrenderer: {
-										container: (showInstructions && $("#'.$this->routeElement.'").length > 0 ? $("#'.$this->routeElement.'").empty() : null),
+										container: (showInstructions && jQuery("#'.$this->routeElement.'").length > 0 ? jQuery("#'.$this->routeElement.'").empty() : null),
 										options: {
 											directions: results
 										}
