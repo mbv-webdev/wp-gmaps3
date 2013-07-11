@@ -43,7 +43,7 @@ just upload and activate the plugin
 
 = 0.3.8 =
 * Changed $ to jQuery
-* Changed with-route to withroute
+* Added withroute (in addition to with-route)
 * Added check for destination, as it is required when using withroute
 * Solved problem with destination address field id
 * Removed unnecessary do_shortcode
