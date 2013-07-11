@@ -48,5 +48,8 @@ just upload and activate the plugin
 * Solved problem with destination address field id
 * Removed unnecessary do_shortcode
 
+= 0.3 =
+* Added missing function and event binding
+
 = 0.2 =
 * Route Form added
