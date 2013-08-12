@@ -88,15 +88,19 @@
 			);
 			
 			// javascript function with parameters
-			$gmapsFn = "
-				var gmap".($this->gmapsElement)." = null,
-					route_address = '".$destination_address."';
+			$gmapsFn = 'route_address = "'.$destination_address.'";';
+			
+			if (!empty($args['customfunction'])) {
+				$gmapsFn .= $args['customfunction'].'("'.$destination_address.'");';
+			} else {
+				$gmapsFn .= "
+					var gmap".($this->gmapsElement)." = null;
 
-				jQuery(function($) {
-					gmap".($this->gmapsElement)." = $('#".$this->gmapsjQueryString."').gmap3(".json_encode($gmapsJSON).");
-				})
-
-				jQuery(document).on('submit', '#".$this->gmapsjQueryString."-form', calculateRoute);";
+					jQuery(function($) {
+						gmap".($this->gmapsElement)." = jQuery('#".$this->gmapsjQueryString."').gmap3(".json_encode($gmapsJSON).");
+					});";
+				$gmapsFn .= "jQuery(document).on('submit', '#".$this->gmapsjQueryString."-form', calculateRoute);";
+			}
 
 			$gmapsHTML  = '<div id="'.($this->gmapsjQueryString).'" style="height:'.$args['height'].'; width: '.$args['width'].';"></div>';
 			$gmapsHTML .= '<script type="text/javascript">'.$gmapsFn.'</script>';
